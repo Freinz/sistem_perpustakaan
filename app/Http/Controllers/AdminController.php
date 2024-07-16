@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Anggota;
+use App\Models\Buku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -33,7 +34,13 @@ class AdminController extends Controller
     // Mengambil semua data anggota
     $anggota = Anggota::all();
 
-    return view('admin.index', compact('anggota', 'totalAnggota'));
+     // Menghitung jumlah judul buku
+     $totalBuku = Buku::count();
+
+     // Mengambil semua data buku
+     $buku = Buku::all();
+
+    return view('admin.index', compact('anggota', 'totalAnggota','buku', 'totalBuku'));
 }
 
     /**
@@ -120,7 +127,7 @@ public function anggota_read($id)
 
         $anggota->delete();
 
-        Alert::success('Sukses', 'Role Berhasil Dihapus');
+        Alert::success('Sukses', 'Anggota Berhasil Dihapus');
 
         return redirect()->back();
     }

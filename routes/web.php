@@ -14,10 +14,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kirim_anggota', [AdminController::class,'kirim_anggota']);
     Route::get('/anggota_read/{id}', [AdminController::class,'anggota_read']);
     Route::post('/anggota_edit/{id}', [AdminController::class,'anggota_edit']);
-    Route::post('/anggota_hapus/{id}', [AdminController::class,'anggota_hapus']);
+    Route::get('/anggota_hapus/{id}', [AdminController::class,'anggota_hapus']);
     
     Route::get('/lihat_buku', [BukuController::class,'index']);
     Route::get('/tambah_buku', [BukuController::class,'create']);
+    Route::post('/kirim_buku', [BukuController::class,'store']);
+    Route::get('/edit_buku/{id}', [BukuController::class,'edit']);
+    Route::put('update_buku/{id}', [BukuController::class, 'update'])->name('update_buku');
+    Route::get('/buku_hapus/{id}', [BukuController::class,'destroy']);
+    
 
 
     Route::get('{routeName}/{name?}', [HomeController::class, 'pageView']);

@@ -42,7 +42,7 @@
                             <img src="{{ URL::asset('build/images/widget/img-status-2.svg') }}" alt="img"
                                 class="img-fluid img-bg">
                             <div class="d-flex align-items-center">
-                                <h3 class="f-w-300 d-flex align-items-center m-b-0">10</h3>
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0">{{$totalBuku}}</h3>
                                 <span class="badge bg-light-primary ms-2">Judul Buku Yang Terdata</span>
                             </div>
                             

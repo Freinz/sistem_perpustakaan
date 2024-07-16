@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Tambah Buku')
+@section('title', 'Edit Buku')
 
 @section('css')
 <!-- [Page specific CSS] start -->
@@ -16,17 +16,18 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5>Isi Data Buku Berikut</h5>
+                <h5>Edit Data Buku Berikut</h5>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="{{ url('kirim_buku') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ url('update_buku/' . $buku->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
 
                             <div class="form-group">
                                 <label class="form-label" for="judul_buku">Judul Buku</label>
-                                <input type="text" class="form-control @error('judul_buku') is-invalid @enderror" name="judul_buku" id="judul_buku" placeholder="Masukkan Judul Buku" value="{{ old('judul_buku') }}">
+                                <input type="text" class="form-control @error('judul_buku') is-invalid @enderror" name="judul_buku" id="judul_buku" placeholder="Masukkan Judul Buku" value="{{ old('judul_buku', $buku->judul_buku) }}">
                                 @error('judul_buku')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -34,7 +35,7 @@
 
                             <div class="form-group">
                                 <label class="form-label" for="nama_penulis">Nama Penulis</label>
-                                <input type="text" class="form-control @error('nama_penulis') is-invalid @enderror" name="nama_penulis" id="nama_penulis" placeholder="Masukkan Nama Penulis" value="{{ old('nama_penulis') }}">
+                                <input type="text" class="form-control @error('nama_penulis') is-invalid @enderror" name="nama_penulis" id="nama_penulis" placeholder="Masukkan Nama Penulis" value="{{ old('nama_penulis', $buku->nama_penulis) }}">
                                 @error('nama_penulis')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -42,7 +43,7 @@
 
                             <div class="form-group">
                                 <label class="form-label" for="nama_penerbit">Nama Penerbit</label>
-                                <input type="text" class="form-control @error('nama_penerbit') is-invalid @enderror" name="nama_penerbit" id="nama_penerbit" placeholder="Masukkan Nama Penerbit" value="{{ old('nama_penerbit') }}">
+                                <input type="text" class="form-control @error('nama_penerbit') is-invalid @enderror" name="nama_penerbit" id="nama_penerbit" placeholder="Masukkan Nama Penerbit" value="{{ old('nama_penerbit', $buku->nama_penerbit) }}">
                                 @error('nama_penerbit')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -50,7 +51,7 @@
 
                             <div class="form-group">
                                 <label class="form-label" for="tahun_terbit">Tahun Penerbit</label>
-                                <input type="number" class="form-control @error('tahun_terbit') is-invalid @enderror" name="tahun_terbit" id="tahun_terbit" placeholder="Masukkan Tahun Penerbit" value="{{ old('tahun_terbit') }}">
+                                <input type="number" class="form-control @error('tahun_terbit') is-invalid @enderror" name="tahun_terbit" id="tahun_terbit" placeholder="Masukkan Tahun Penerbit" value="{{ old('tahun_terbit', $buku->tahun_terbit) }}">
                                 @error('tahun_terbit')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -58,14 +59,14 @@
 
                             <div class="form-group">
                                 <label class="form-label" for="kategori">Kategori</label>
-                                <input type="text" class="form-control @error('kategori') is-invalid @enderror" name="kategori" id="kategori" placeholder="Masukkan Kategori" value="{{ old('kategori') }}">
+                                <input type="text" class="form-control @error('kategori') is-invalid @enderror" name="kategori" id="kategori" placeholder="Masukkan Kategori" value="{{ old('kategori', $buku->kategori) }}">
                                 @error('kategori')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="form-group text-right">
-                                <button type="submit" class="btn btn-primary">Tambahkan</button>
+                                <button type="submit" class="btn btn-primary">Perbarui</button>
                             </div>
                         </form>
                     </div>

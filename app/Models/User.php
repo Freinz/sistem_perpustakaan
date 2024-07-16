@@ -21,13 +21,13 @@ class User extends Authenticatable
         'email',
         'password',
         'usertype',
-        'pegawai_id', // pastikan ini ada di sini jika diperlukan
+        'anggota_id', // pastikan ini ada di sini jika diperlukan
     ];
 
-    // Relasi dengan pegawai
-    public function pegawai()
+    // Relasi dengan anggota
+    public function anggota()
     {
-        return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
+        return $this->belongsTo(Anggota::class, 'anggota', 'id');
     }
 
     /**
@@ -50,8 +50,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function agenda()
+    public function peminjaman()
     {
-        return $this->hasMany(Agenda::class);
+        return $this->hasMany(Peminjaman::class);
     }
 }

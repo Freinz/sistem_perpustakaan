@@ -28,9 +28,30 @@ class BukuController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
+{
+    // Validasi input
+    $request->validate([
+        'judul_buku' => 'required|string|max:255',
+        'nama_penulis' => 'required|string|max:255',
+        'nama_penerbit' => 'required|string|max:255',
+        'tahun_terbit' => 'required|integer',
+        'kategori' => 'required|string|max:255',
+    ]);
+
+    // Menambah buku baru
+    $buku = Buku::create([
+        'judul_buku' => $request->judul_buku, // Sesuaikan dengan nama kolom di tabel
+        'nama_penulis' => $request->nama_penulis,
+        'nama_penerbit' => $request->nama_penerbit,
+        'tahun_terbit' => $request->tahun_terbit,
+        'kategori' => $request->kategori,
+    ]);
+
+    // Menampilkan notifikasi sukses
+    Alert::success('Sukses', 'Buku berhasil ditambahkan');
+    return redirect()->back();
+}
+
 
     /**
      * Display the specified resource.
@@ -43,25 +64,59 @@ class BukuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $buku = Buku::findOrFail($id);
+        return view('buku.edit_buku', compact('buku'));
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    // Validasi input
+    $request->validate([
+        'judul_buku' => 'required|string|max:255',
+        'nama_penulis' => 'required|string|max:255',
+        'nama_penerbit' => 'required|string|max:255',
+        'tahun_terbit' => 'required|integer',
+        'kategori' => 'required|string|max:255',
+    ]);
+
+    // Temukan buku berdasarkan id
+    $buku = Buku::findOrFail($id);
+
+    // Update data buku
+    $buku->update([
+        'judul_buku' => $request->judul_buku,
+        'nama_penulis' => $request->nama_penulis,
+        'nama_penerbit' => $request->nama_penerbit,
+        'tahun_terbit' => $request->tahun_terbit,
+        'kategori' => $request->kategori,
+    ]);
+
+    // Menampilkan notifikasi sukses
+    Alert::success('Sukses', 'Buku berhasil diperbarui');
+    return redirect()->back();
+}
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+
+        $buku = Buku::find($id); // User dari nama models
+
+        $buku->delete();
+
+        Alert::success('Sukses', 'Buku Berhasil Dihapus');
+
+        return redirect()->back();
     }
 }
 

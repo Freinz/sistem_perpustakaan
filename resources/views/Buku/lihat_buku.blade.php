@@ -20,6 +20,8 @@
 </style>
 @endsection
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 @section('content')
 <!-- [ Main Content ] start -->
 <div class="row">
@@ -52,19 +54,17 @@
                                 <td>{{ $buku->judul_buku }}</td>
                                 <td>{{ $buku->nama_penulis }}</td>
                                 <td>{{ $buku->nama_penerbit }}</td>
-                                <td>{{ $buku->tahun_penerbit }}</td>
+                                <td>{{ $buku->tahun_terbit }}</td>
                                 <td>{{ $buku->kategori }}</td>
                                 <td>
                                     <ul class="list-inline mb-0">
                                         <li class="list-inline-item m-0">
-                                            <a href="{{ url('anggota_read', $anggota->id) }}" class="avtar avtar-s btn btn-primary">
+                                            <a href="{{ url('edit_buku', $buku->id) }}" class="avtar avtar-s btn btn-primary">
                                                 <i class="ti ti-pencil f-18"></i>
                                             </a>
                                         </li>
                                         <li class="list-inline-item m-0">
-                                            <button class="btn btn-danger delete-button" data-id="{{ $anggota->id }}">
-                                                <i class="ti ti-trash f-18"></i>
-                                            </button>
+                                        <a href="{{ url('buku_hapus', $buku->id) }}" class="btn btn-danger" onclick="confirmation(event)">Hapus</a>
                                         </li>
                                     </ul>
                                 </td>
@@ -83,43 +83,22 @@
 @section('scripts')
 <!-- [Page Specific JS] start -->
 <!-- datatable Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="{{ URL::asset('build/js/plugins/dataTables.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/plugins/dataTables.bootstrap5.min.js') }}"></script>
-<!-- DataTables Buttons JS -->
-<script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.bootstrap5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
-<!-- Sweet Alert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dataTable = new simpleDatatables.DataTable('#pc-dt-simple', {
-            sortable: false,
-            perPage: 5
+    function confirmation(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');
+        swal({
+            title:"Apakah Kamu Yakin Menghapus Data Ini?",
+            text: "Kamu tidak bisa mengembalikan data ini",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                window.location.href = urlToRedirect;
+            }
         });
-
-        $(document).ready(function() {
-            $('.delete-button').on('click', function() {
-                var id = $(this).data('id');
-                Swal.fire({
-                    title: 'Apakah Anda Yakin?',
-                    text: "Data tidak dapat dikembalikan!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Iya, Hapus saja!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "/anggota_hapus/" + id;
-                    }
-                });
-            });
-        });
-    });
+    }
 </script>
 
 <script>
