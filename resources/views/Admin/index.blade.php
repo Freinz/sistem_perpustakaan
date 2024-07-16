@@ -23,7 +23,7 @@
                                 class="img-fluid img-bg h-100">
                             <div class="d-flex align-items-center">
                                 <h3 class="f-w-300 d-flex align-items-center m-b-0"><small
-                                        class="text-muted"></small>15</h3>
+                                        class="text-muted"></small>{{ $totalAnggota }}</h3>
                                 <span class="badge bg-light-success ms-2">Anggota Yang Terdata</span>
                             </div>
                           

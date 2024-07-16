@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Agenda;
-use App\Models\Pegawai;
-use App\Models\User;
+use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -26,95 +24,104 @@ class AdminController extends Controller
             return redirect()->back();
         }
     }
+
+    public function index()
+{
+    // Menghitung jumlah anggota
+    $totalAnggota = Anggota::count();
+
+    // Mengambil semua data anggota
+    $anggota = Anggota::all();
+
+    return view('admin.index', compact('anggota', 'totalAnggota'));
+}
+
     /**
      * Display a listing of the resource.
      */
-    public function lihat_pengirim()
+    public function lihat_anggota()
+    {
+        $anggota = Anggota::all();
+
+        return view('admin.lihat_anggota', compact('anggota'));
+    }
+    
+    public function tambah_anggota()
     {
 
-        $agenda = Agenda::all();
-
-        return view('admin.lihat_pengirim', compact('agenda'));
+        return view('admin.tambah_anggota');
     }
 
-    public function hapus_pengirim($id)
+    public function kirim_anggota(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'email' => 'required|string|email|max:255|unique:anggotas,email',
+        'nama_lengkap' => 'required|string|max:255',
+        'alamat' => 'nullable|string|max:255',
+        'tanggal_lahir' => 'nullable|date',
+        'no_hp' => 'nullable|string|max:20', // Sesuaikan dengan tipe data yang dipilih di migration
+    ]);
+
+    // Menambah anggota baru
+    $anggota = Anggota::create([
+        'email' => $request->email,
+        'nama_lengkap' => $request->nama_lengkap, // Sesuaikan dengan nama kolom di tabel
+        'alamat' => $request->alamat,
+        'tanggal_lahir' => $request->tanggal_lahir,
+        'no_hp' => $request->no_hp,
+    ]);
+
+    // Menampilkan notifikasi sukses
+    Alert::success('Sukses', 'Anggota berhasil ditambahkan');
+    return redirect()->back();
+}
+
+public function anggota_read($id)
     {
-        $event = Agenda::find($id);
+        $anggota = Anggota::find($id);
 
-        $event->delete();
 
-        // Tampilkan alert menggunakan SweetAlert
-        Alert::success('Sukses', 'Event berhasil dihapus');
-
-        return redirect()->back();
+        return view('admin.update_anggota', compact('anggota'));
     }
 
-
-    public function update_status(Request $request, $id)
-    {
-        // Cari agenda berdasarkan id
-        $agenda = Agenda::findOrFail($id);
-
-        // Update status
-        $agenda->status = $request->input('status');
-        $agenda->save();
-
-        // Berikan notifikasi sukses
-        Alert::success('Sukses', 'Status Telah Diperbarui');
-
-        return redirect()->back();
-    }
-
-
-    public function lihat_pegawai()
-    {
-        $data = Pegawai::all();
-
-        return view('admin.lihat_pegawai', compact('data'));
-    }
-
-    public function index()
-    {
-        return view('admin.index');
-    }
-
-    public function input_pegawai()
-    {
-
-        return view('admin.input_pegawai');
-    }
-
-    public function store_pegawai(Request $request)
+    public function anggota_edit(Request $request, $id)
     {
         // Validasi input
         $request->validate([
-            'email' => 'required|string|email|max:255|unique:users',
-            'nama_pegawai' => 'required|string|max:255',
-            'nip' => 'nullable|string|max:255',
-            'jabatan' => 'nullable|string|max:255',
+            'nama_lengkap' => 'required|string|max:255',
+            'alamat' => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
+            'no_hp' => 'nullable|string|max:20',
         ]);
-    
-        // Menambah pegawai baru
-        $pegawai = Pegawai::create([
-            'email' => $request->email,
-            'nama_pegawai' => $request->nama_pegawai,
-            'nip' => $request->nip,
-            'jabatan' => $request->jabatan,
+
+        // Ambil data anggota berdasarkan ID
+        $anggota = Anggota::findOrFail($id);
+
+        // Update data anggota
+        $anggota->update([
+            'nama_lengkap' => $request->nama_lengkap,
+            'alamat' => $request->alamat,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'no_hp' => $request->no_hp,
         ]);
-    
-        // Membuat pengguna baru terkait dengan detail pegawai yang baru dibuat
-        $user = User::create([
-            'email' => $pegawai->email,
-            'password' => bcrypt('12345678'),
-            'usertype' => 'user', // Menetapkan usertype secara otomatis
-        ]);
-    
-        // Menghubungkan user dengan pegawai yang baru dibuat
-        $user->pegawai()->associate($pegawai);
-        $user->save();
-    
-        // Menampilkan notifikasi sukses
-        Alert::success('Sukses', 'Akun berhasil dibuat');
+
+        // Tampilkan notifikasi sukses
+        Alert::success('Sukses', 'Anggota berhasil diperbarui');
+
+        // Redirect ke halaman tertentu setelah berhasil memperbarui
+        return redirect('/lihat_anggota');
+    }
+
+    public function anggota_hapus($id)
+    {
+
+        $anggota = Anggota::find($id); // User dari nama models
+
+        $anggota->delete();
+
+        Alert::success('Sukses', 'Role Berhasil Dihapus');
+
         return redirect()->back();
     }
     

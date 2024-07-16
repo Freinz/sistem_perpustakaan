@@ -7,7 +7,15 @@
             </a>
         </li>
         <li class="pc-item">
-            <a href="{{ url('lihat_pegawai') }}" class="pc-link">
+            <a href="{{ url('tambah_anggota') }}" class="pc-link">
+                <span class="pc-micon">
+                    <i class="ph-duotone ph-user-plus"></i>
+                </span>
+                <span class="pc-mtext">Tambah Data Anggota</span>
+            </a>
+        </li>
+        <li class="pc-item">
+            <a href="{{ url('lihat_anggota') }}" class="pc-link">
                 <span class="pc-micon">
                     <i class="ph-duotone ph-users"></i>
                 </span>
