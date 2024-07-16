@@ -15,6 +15,13 @@ class BukuController extends Controller
 
         return view('buku.lihat_buku', compact('buku'));
     }
+    
+    public function lihat_buku_anggota()
+    {
+        $buku = Buku::all();
+
+        return view('anggota.lihat_buku_anggota', compact('buku'));
+    }
 
     /**
      * Show the form for creating a new resource.

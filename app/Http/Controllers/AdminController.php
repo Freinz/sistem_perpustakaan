@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use App\Models\Buku;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -15,33 +16,29 @@ class AdminController extends Controller
     public function dashboard()
     {
 
+        // Menghitung jumlah anggota
+        $totalAnggota = Anggota::count();
+
+        // Mengambil semua data anggota
+        $anggota = Anggota::all();
+
+        // Menghitung jumlah judul buku
+        $totalBuku = Buku::count();
+
+        // Mengambil semua data buku
+        $buku = Buku::all();
+
         $usertype = Auth::user()->usertype;
 
         if ($usertype == 'admin') {
-            return redirect()->route('admin.index');
-        } else if ($usertype == 'user') {
-            return redirect()->route('pegawai.index');
+            return view('admin.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
+        } else if ($usertype == 'anggota') {
+            return view('anggota.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
         } else {
             return redirect()->back();
         }
     }
 
-    public function index()
-{
-    // Menghitung jumlah anggota
-    $totalAnggota = Anggota::count();
-
-    // Mengambil semua data anggota
-    $anggota = Anggota::all();
-
-     // Menghitung jumlah judul buku
-     $totalBuku = Buku::count();
-
-     // Mengambil semua data buku
-     $buku = Buku::all();
-
-    return view('admin.index', compact('anggota', 'totalAnggota','buku', 'totalBuku'));
-}
 
     /**
      * Display a listing of the resource.
@@ -52,7 +49,7 @@ class AdminController extends Controller
 
         return view('admin.lihat_anggota', compact('anggota'));
     }
-    
+
     public function tambah_anggota()
     {
 
@@ -60,31 +57,41 @@ class AdminController extends Controller
     }
 
     public function kirim_anggota(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        'email' => 'required|string|email|max:255|unique:anggotas,email',
-        'nama_lengkap' => 'required|string|max:255',
-        'alamat' => 'nullable|string|max:255',
-        'tanggal_lahir' => 'nullable|date',
-        'no_hp' => 'nullable|string|max:20', // Sesuaikan dengan tipe data yang dipilih di migration
-    ]);
+    {
+        // Validasi input
+        $request->validate([
+            'email' => 'required|string|email|max:255|unique:anggotas,email',
+            'nama_lengkap' => 'required|string|max:255',
+            'alamat' => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
+            'no_hp' => 'nullable|string|max:20', // Sesuaikan dengan tipe data yang dipilih di migration
+        ]);
 
-    // Menambah anggota baru
-    $anggota = Anggota::create([
-        'email' => $request->email,
-        'nama_lengkap' => $request->nama_lengkap, // Sesuaikan dengan nama kolom di tabel
-        'alamat' => $request->alamat,
-        'tanggal_lahir' => $request->tanggal_lahir,
-        'no_hp' => $request->no_hp,
-    ]);
+        // Menambah anggota baru
+        $anggota = Anggota::create([
+            'email' => $request->email,
+            'nama_lengkap' => $request->nama_lengkap, // Sesuaikan dengan nama kolom di tabel
+            'alamat' => $request->alamat,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'no_hp' => $request->no_hp,
+        ]);
 
-    // Menampilkan notifikasi sukses
-    Alert::success('Sukses', 'Anggota berhasil ditambahkan');
-    return redirect()->back();
-}
+        $user = User::create([
+            'email' => $anggota->email,
+            'password' => bcrypt('12345678'),
+            'usertype' => 'anggota', // Menetapkan usertype secara otomatis
+        ]);
 
-public function anggota_read($id)
+        // Menghubungkan user dengan pegawai yang baru dibuat
+        $user->anggota()->associate($anggota);
+        $user->save();
+
+        // Menampilkan notifikasi sukses
+        Alert::success('Sukses', 'Anggota berhasil ditambahkan');
+        return redirect()->back();
+    }
+
+    public function anggota_read($id)
     {
         $anggota = Anggota::find($id);
 
@@ -131,7 +138,7 @@ public function anggota_read($id)
 
         return redirect()->back();
     }
-    
+
 
 
 

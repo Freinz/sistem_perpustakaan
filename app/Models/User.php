@@ -27,7 +27,7 @@ class User extends Authenticatable
     // Relasi dengan anggota
     public function anggota()
     {
-        return $this->belongsTo(Anggota::class, 'anggota', 'id');
+        return $this->belongsTo(Anggota::class, 'anggota_id', 'id');
     }
 
     /**

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('usertype')->default('user');
-            $table->foreignId('anggota')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('anggota_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

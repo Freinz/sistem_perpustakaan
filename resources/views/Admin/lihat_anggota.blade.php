@@ -48,7 +48,8 @@
                                             </a>
                                         </li>
                                         <li class="list-inline-item m-0">
-                                            <a href="{{ url('anggota_hapus', $anggota->id) }}" class="btn btn-danger" onclick="confirmation(event)">Hapus</a>
+                                           
+                                        <a href="{{ url('anggota_hapus', $anggota->id) }}" class="btn btn-danger" onclick="confirmation(event)">Hapus</a>
                                         </li>
                                     </ul>
                                 </td>

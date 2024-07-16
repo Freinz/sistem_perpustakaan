@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('anggota.main')
 
 @section('title')
 @section('breadcrumb-item', 'DataTable')
@@ -30,8 +30,6 @@
         <div class="card">
             <div class="card-body">
                 
-                <!-- Add Book Button -->
-                <a href="{{ url('tambah_buku') }}" class="btn btn-primary add-book-button">Tambahkan Buku</a>
 
                 <div class="table-responsive dt-responsive">
                     <table id="multi-table" class="table table-striped table-bordered nowrap">
@@ -43,7 +41,6 @@
                                 <th>Penerbit</th>
                                 <th>Tahun Terbit</th>
                                 <th>Kategori</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,18 +53,7 @@
                                 <td>{{ $buku->nama_penerbit }}</td>
                                 <td>{{ $buku->tahun_terbit }}</td>
                                 <td>{{ $buku->kategori }}</td>
-                                <td>
-                                    <ul class="list-inline mb-0">
-                                        <li class="list-inline-item m-0">
-                                            <a href="{{ url('edit_buku', $buku->id) }}" class="avtar avtar-s btn btn-primary">
-                                                <i class="ti ti-pencil f-18"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item m-0">
-                                        <a href="{{ url('buku_hapus', $buku->id) }}" class="btn btn-danger" onclick="confirmation(event)">Hapus</a>
-                                        </li>
-                                    </ul>
-                                </td>
+                               
                             </tr>
                             @endforeach
                         </tbody>
