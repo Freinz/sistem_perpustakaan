@@ -14,7 +14,7 @@
 <meta name="author" content="phoenixcoded" />
 
     <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ URL::asset('image/kemenkumham.png') }}"   type="image/png">
+    <link rel="icon" href="{{ URL::asset('image/poliban.png') }}"   type="image/png">
 
     @yield('css')
 

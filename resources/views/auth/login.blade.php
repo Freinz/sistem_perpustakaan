@@ -7,9 +7,10 @@
         <div class="card my-5">
             <div class="card-body">
                 <div class="text-center">
-                    <h4>KANTOR WILAYAH</h4> <h4>KEMENKUMHAM</h4>
-                    <img src="{{ URL::asset('image/kemenkumham.png') }}" alt="images"  class="img-fluid w-25 mb-3">
-                    <h4 class="f-w-500 mb-1">Login Peserta</h4>
+                    <h2>SISTEM INFORMASI</h2> <h2>PERPUSTAKAAN</h2>
+                    <!-- ganti gambar disini -->
+                    <img src="{{ URL::asset('image/poliban.png') }}" alt="images"  class="img-fluid w-25 mb-3">
+                    <!-- <h4 class="f-w-500 mb-1">Login Peserta</h4> -->
                  
                 </div>
                 <form method="POST" action="{{ route('login') }}">

@@ -1,151 +1,101 @@
 @extends('layouts.main')
 
-@section('title', 'Calendar')
+@section('title', 'Dashboard')
 @section('breadcrumb-item', 'Application')
 
-@section('breadcrumb-item-active', 'Calendar')
+@section('breadcrumb-item-active', 'Dashboard')
 
 @section('css')
 @endsection
 
 @section('content')
-    <!-- [ Main Content ] start -->
-    <div class="row">
-        <!-- [ sample-page ] start -->
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body position-relative">
-                    <div id="calendar" class="calendar"></div>
+   <!-- [ Main Content ] start -->
+   <div class="row">
+    <div class="col-sm-6 col-md-6">
+                    <div class="card statistics-card-1">
+                        <div class="card-header d-flex align-items-center justify-content-between py-3">
+                            <h5>Jumlah Anggota</h5>
+                          
+                        </div>
+
+                        <div class="card-body">
+                            <img src="{{ URL::asset('build/images/widget/img-status-1.svg') }}" alt="img"
+                                class="img-fluid img-bg h-100">
+                            <div class="d-flex align-items-center">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><small
+                                        class="text-muted"></small>15</h3>
+                                <span class="badge bg-light-success ms-2">Anggota Yang Terdata</span>
+                            </div>
+                          
+                           
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <!-- [ sample-page ] end -->
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="card statistics-card-1">
+                        <div class="card-header d-flex align-items-center justify-content-between py-3">
+                            <h5>Judul Buku</h5>
+                           
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ URL::asset('build/images/widget/img-status-2.svg') }}" alt="img"
+                                class="img-fluid img-bg">
+                            <div class="d-flex align-items-center">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0">10</h3>
+                                <span class="badge bg-light-primary ms-2">Judul Buku Yang Terdata</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="card statistics-card-1">
+                        <div class="card-header d-flex align-items-center justify-content-between py-3">
+                            <h5>Daftar Peminjaman</h5>
+                            <div class="dropdown">
+                          
+                             
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ URL::asset('build/images/widget/img-status-3.svg') }}" alt="img"
+                                class="img-fluid img-bg">
+                            <div class="d-flex align-items-center">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"> <small
+                                        class="text-muted"></small>4</h3>
+                                <span class="badge bg-light-danger ms-2">Daftar Peminjaman</span>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="card statistics-card-1">
+                        <div class="card-header d-flex align-items-center justify-content-between py-3">
+                            <h5>Daftar Pengembalian</h5>
+                            <div class="dropdown">
+                          
+                             
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ URL::asset('build/images/widget/img-status-3.svg') }}" alt="img"
+                                class="img-fluid img-bg">
+                            <div class="d-flex align-items-center">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"> <small
+                                        class="text-muted"></small>3</h3>
+                                <span class="badge bg-light-danger ms-2">Daftar Pengembalian</span>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
     </div>
     <!-- [ Main Content ] end -->
 
-    <div class="modal fade" id="calendar-modal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h3 class="calendar-modal-title f-w-600 text-truncate">Nama Kegiatan</h3>
-                    <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
-                        <i class="ti ti-x f-20"></i>
-                    </a>
-                </div>
-
-                <div class="modal-body">
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-secondary">
-                                <i class="ti ti-heading f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Nama Kegiatan</b></h5>
-                            <p class="pc-event-title text-muted"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-secondary">
-                                <i class="ti ti-heading f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Jenis Kegiatan</b></h5>
-                            <p class="pc-event-kegiatan text-muted"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-secondary">
-                                <i class="ti ti-heading f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Berkas Pelaksanaan</b></h5>
-                            <p class="pc-event-documents text-muted"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-secondary">
-                                <i class="ti ti-heading f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Kelengkapan Pelaksanaan</b></h5>
-                            <p class="pc-event-equipment text-muted"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-secondary">
-                                <i class="ti ti-heading f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Pelaksana Kegiatan</b></h5>
-                            <p class="pc-event-organizer text-muted"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-warning">
-                                <i class="ti ti-map-pin f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Tempat Pelaksanaan</b></h5>
-                            <p class="pc-event-venue text-muted"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-danger">
-                                <i class="ti ti-calendar-event f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Tanggal Pelaksanaan</b></h5>
-                            <p class="pc-event-date text-muted"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-xs bg-light-primary">
-                                <i class="ti ti-file-text f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1"><b>Catatan</b></h5>
-                            <p class="pc-event-description text-muted"></p>
-                        </div>
-                    </div>
-
-                </div>
-
-                
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="offcanvas offcanvas-end cal-event-offcanvas" tabindex="-1" id="calendar-add_edit_event">
-
         
-    </div>
+    <!-- [ Main Content ] end -->
 
 @endsection
 
