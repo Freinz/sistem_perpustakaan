@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BukuController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
@@ -14,6 +15,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/anggota_read/{id}', [AdminController::class,'anggota_read']);
     Route::post('/anggota_edit/{id}', [AdminController::class,'anggota_edit']);
     Route::post('/anggota_hapus/{id}', [AdminController::class,'anggota_hapus']);
+    
+    Route::get('/lihat_buku', [BukuController::class,'index']);
+    Route::get('/tambah_buku', [BukuController::class,'create']);
+
 
     Route::get('{routeName}/{name?}', [HomeController::class, 'pageView']);
 });

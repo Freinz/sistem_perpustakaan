@@ -2,7 +2,7 @@
 
 @section('title')
 @section('breadcrumb-item', 'DataTable')
-@section('breadcrumb-item-active', 'Data Anggota')
+@section('breadcrumb-item-active', 'Data Buku')
 
 @section('css')
 <!-- [Page specific CSS] start -->
@@ -14,6 +14,9 @@
     .hidden {
         display: none;
     }
+    .add-book-button {
+        margin-bottom: 15px;
+    }
 </style>
 @endsection
 
@@ -24,33 +27,33 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
+                
+                <!-- Add Book Button -->
+                <a href="{{ url('tambah_buku') }}" class="btn btn-primary add-book-button">Tambahkan Buku</a>
 
                 <div class="table-responsive dt-responsive">
-
                     <table id="multi-table" class="table table-striped table-bordered nowrap">
                         <thead>
                             <tr>
-                                <th>id anggota</th>
-                                <th>Nama</th>
-                                <th>Alamat</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Nomor HP</th>
-                                <th>Email</th>
+                                <th>Id buku</th>
+                                <th>Judul</th>
+                                <th>Penulis</th>
+                                <th>Penerbit</th>
+                                <th>Tahun Terbit</th>
+                                <th>Kategori</th>
                                 <th>Aksi</th>
-
                             </tr>
                         </thead>
                         <tbody>
                             @php $nomor = 1; @endphp
-                            @foreach ($anggota as $anggota)
+                            @foreach ($buku as $buku)
                             <tr>
-                                <td>{{ $anggota -> id}}</td>
-                                <td>{{ $anggota -> nama_lengkap }}</td>
-                                <td>{{ $anggota -> alamat }}</td>
-                                <td>{{ $anggota -> tanggal_lahir }}</td>
-                                <td>{{ $anggota -> no_hp }}</td>
-                                <td>{{ $anggota -> email }}</td>
-
+                                <td>{{ $buku->id }}</td>
+                                <td>{{ $buku->judul_buku }}</td>
+                                <td>{{ $buku->nama_penulis }}</td>
+                                <td>{{ $buku->nama_penerbit }}</td>
+                                <td>{{ $buku->tahun_penerbit }}</td>
+                                <td>{{ $buku->kategori }}</td>
                                 <td>
                                     <ul class="list-inline mb-0">
                                         <li class="list-inline-item m-0">
@@ -62,25 +65,18 @@
                                             <button class="btn btn-danger delete-button" data-id="{{ $anggota->id }}">
                                                 <i class="ti ti-trash f-18"></i>
                                             </button>
-
                                         </li>
                                     </ul>
                                 </td>
-
-
                             </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
-
 <!-- [ Main Content ] end -->
 @endsection
 
@@ -122,7 +118,6 @@
                     }
                 });
             });
-
         });
     });
 </script>

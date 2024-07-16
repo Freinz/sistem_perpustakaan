@@ -23,7 +23,7 @@
             </a>
         </li>
         <li class="pc-item">
-            <a href="{{ url('input_pegawai') }}" class="pc-link">
+            <a href="{{ url('lihat_buku') }}" class="pc-link">
                 <span class="pc-micon">
                     <i class="ph-duotone ph-book"></i>
                 </span>
