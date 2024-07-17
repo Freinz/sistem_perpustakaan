@@ -30,14 +30,7 @@
                 <span class="pc-mtext">Data Buku</span>
             </a>
         </li>
-        <li class="pc-item">
-            <a href="{{ url('lihat_laporan') }}" class="pc-link">
-                <span class="pc-micon">
-                    <i class="ph-duotone ph-file-text"></i>
-                </span>
-                <span class="pc-mtext">Laporan</span>
-            </a>
-        </li>
+
         <li class="pc-item">
             <a href="{{ url('daftar_peminjaman') }}" class="pc-link">
                 <span class="pc-micon">

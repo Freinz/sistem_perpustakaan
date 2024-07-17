@@ -34,8 +34,6 @@ class AdminController extends Controller
             return view('admin.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
         } else if ($usertype == 'anggota') {
             return view('anggota.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
-        } else if ($usertype == 'kepala_perpustakaan') {
-            return view('kepala_perpustakaan.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
         } else {
             return redirect()->back();
         }
@@ -65,7 +63,6 @@ class AdminController extends Controller
             'alamat' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|date',
             'no_hp' => 'nullable|string|max:20', // Sesuaikan dengan tipe data yang dipilih di migration
-            'usertype' => 'required|in:anggota,kepala_perpustakaan',
         ]);
 
         // Menambah anggota baru
@@ -81,7 +78,7 @@ class AdminController extends Controller
         $user = User::create([
             'email' => $anggota->email,
             'password' => bcrypt('12345678'),
-            'usertype' => $request->usertype, // Menggunakan nilai usertype dari input
+            'usertype' => 'anggota', // Menggunakan nilai usertype dari input
         ]);
 
         // Menghubungkan user dengan anggota yang baru dibuat

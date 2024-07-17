@@ -62,16 +62,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="usertype">User Type</label>
-                                <select class="form-control @error('usertype') is-invalid @enderror" name="usertype" id="usertype">
-                                    <option value="anggota" {{ old('usertype') == 'anggota' ? 'selected' : '' }}>Anggota</option>
-                                    <option value="kepala_perpustakaan" {{ old('usertype') == 'kepala_perpustakaan' ? 'selected' : '' }}>Kepala Perpustakaan</option>
-                                </select>
-                                @error('usertype')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+             
 
                             <div class="form-group text-right">
                                 <button type="submit" class="btn btn-primary">Tambahkan</button>
