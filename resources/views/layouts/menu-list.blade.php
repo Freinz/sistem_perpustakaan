@@ -39,11 +39,11 @@
             </a>
         </li>
         <li class="pc-item">
-            <a href="{{ url('data_peminjaman') }}" class="pc-link">
+            <a href="{{ url('daftar_peminjaman') }}" class="pc-link">
                 <span class="pc-micon">
                     <i class="ph-duotone ph-handshake"></i>
                 </span>
-                <span class="pc-mtext">Data Peminjaman Buku</span>
+                <span class="pc-mtext">Daftar Peminjaman Buku</span>
             </a>
         </li>
         <li class="pc-item">

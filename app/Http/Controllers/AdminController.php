@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Anggota;
 use App\Models\Buku;
+use App\Models\Peminjaman;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +12,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
-
     public function dashboard()
     {
-
         // Menghitung jumlah anggota
         $totalAnggota = Anggota::count();
 
@@ -39,7 +37,6 @@ class AdminController extends Controller
         }
     }
 
-
     /**
      * Display a listing of the resource.
      */
@@ -52,7 +49,6 @@ class AdminController extends Controller
 
     public function tambah_anggota()
     {
-
         return view('admin.tambah_anggota');
     }
 
@@ -82,7 +78,7 @@ class AdminController extends Controller
             'usertype' => 'anggota', // Menetapkan usertype secara otomatis
         ]);
 
-        // Menghubungkan user dengan pegawai yang baru dibuat
+        // Menghubungkan user dengan anggota yang baru dibuat
         $user->anggota()->associate($anggota);
         $user->save();
 
@@ -94,7 +90,6 @@ class AdminController extends Controller
     public function anggota_read($id)
     {
         $anggota = Anggota::find($id);
-
 
         return view('admin.update_anggota', compact('anggota'));
     }
@@ -129,63 +124,53 @@ class AdminController extends Controller
 
     public function anggota_hapus($id)
     {
-
         $anggota = Anggota::find($id); // User dari nama models
-
         $anggota->delete();
 
         Alert::success('Sukses', 'Anggota Berhasil Dihapus');
-
         return redirect()->back();
     }
 
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function daftar_peminjaman()
     {
+        // Ambil semua data peminjaman beserta relasi buku dan user
+        $peminjaman = Peminjaman::with('buku', 'user')->get();
+        
+        return view('admin.daftar_peminjaman', compact('peminjaman'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function validasi_peminjaman($id)
     {
-        //
+        // Temukan data peminjaman berdasarkan ID
+        $peminjaman = Peminjaman::findOrFail($id);
+    
+        // Ubah status peminjaman menjadi 'Dipinjam'
+        $peminjaman->status = 'Dipinjam';
+        $peminjaman->save();
+    
+        // Ganti dari redirect()->route() ke redirect()->to() dengan URL langsung
+        return redirect()->to('/daftar_peminjaman')->with('success', 'Peminjaman buku berhasil divalidasi.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function tolak_peminjaman($id)
     {
-        //
+        // Temukan data peminjaman berdasarkan ID
+        $peminjaman = Peminjaman::findOrFail($id);
+
+        // Temukan buku yang dipinjam dalam peminjaman ini
+        $buku = Buku::findOrFail($peminjaman->id_buku);
+
+        // Ubah status peminjaman menjadi 'Ditolak'
+        $peminjaman->status = 'Ditolak';
+        $peminjaman->save();
+
+        // Tambahkan jumlah buku yang tersedia kembali
+        $buku->jumlah += 1;
+        $buku->save();
+
+        // Redirect kembali ke halaman daftar peminjaman dengan pesan sukses
+        return redirect()->to('/daftar_peminjaman')->with('success', 'Peminjaman buku berhasil ditolak.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    // Metode lainnya tidak perlu diubah karena tidak digunakan dalam konteks ini
 }

@@ -9,11 +9,25 @@ class Buku extends Model
 {
     use HasFactory;
     
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'judul_buku',
         'nama_penulis',
         'nama_penerbit',
         'tahun_terbit',
         'kategori',
+        'jumlah',
     ];
+
+    /**
+     * Get the peminjamans for the Buku.
+     */
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class, 'id_buku', 'id');
+    }
 }

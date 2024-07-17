@@ -42,6 +42,7 @@ class BukuController extends Controller
         'nama_penulis' => 'required|string|max:255',
         'nama_penerbit' => 'required|string|max:255',
         'tahun_terbit' => 'required|integer',
+        'jumlah' => 'required|integer',
         'kategori' => 'required|string|max:255',
     ]);
 
@@ -51,6 +52,7 @@ class BukuController extends Controller
         'nama_penulis' => $request->nama_penulis,
         'nama_penerbit' => $request->nama_penerbit,
         'tahun_terbit' => $request->tahun_terbit,
+        'jumlah' => $request->jumlah,
         'kategori' => $request->kategori,
     ]);
 

@@ -57,6 +57,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="form-label" for="jumlah">Jumlah Buku</label>
+                                <input type="number" class="form-control @error('jumlah') is-invalid @enderror" name="jumlah" id="jumlah" placeholder="Masukkan Tahun Penerbit" value="{{ old('jumlah') }}">
+                                @error('jumlah')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-label" for="kategori">Kategori</label>
                                 <input type="text" class="form-control @error('kategori') is-invalid @enderror" name="kategori" id="kategori" placeholder="Masukkan Kategori" value="{{ old('kategori') }}">
                                 @error('kategori')

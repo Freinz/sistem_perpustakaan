@@ -35,11 +35,19 @@
                 <span class="pc-micon">
                     <i class="ph-duotone ph-handshake"></i>
                 </span>
-                <span class="pc-mtext">Data Peminjaman Buku</span>
+                <span class="pc-mtext">Peminjaman Buku</span>
             </a>
         </li>
         <li class="pc-item">
-            <a href="{{ url('data_pengembalian') }}" class="pc-link">
+        <a href="{{ url('bukuDipinjam') }}" class="pc-link">
+                <span class="pc-micon">
+                    <i class="ph-duotone ph-handshake"></i>
+                </span>
+                <span class="pc-mtext">List Peminjaman Buku</span>
+            </a>
+        </li>
+        <li class="pc-item">
+            <a href="{{ url('daftar_pengembalian') }}" class="pc-link">
                 <span class="pc-micon">
                     <i class="ph-duotone ph-arrow-arc-left"></i>
                 </span>

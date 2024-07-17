@@ -1,8 +1,8 @@
-@extends('anggota.main')
+@extends('layouts.main')
 
-@section('title')
-@section('breadcrumb-item', 'DataTable')
-@section('breadcrumb-item-active', 'Data Buku')
+@section('title', 'Daftar Peminjaman')
+@section('breadcrumb-item', 'Daftar Peminjaman')
+@section('breadcrumb-item-active', 'Daftar Peminjaman')
 
 @section('css')
 <!-- [Page specific CSS] start -->
@@ -14,13 +14,8 @@
     .hidden {
         display: none;
     }
-    .add-book-button {
-        margin-bottom: 15px;
-    }
 </style>
 @endsection
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 @section('content')
 <!-- [ Main Content ] start -->
@@ -29,33 +24,36 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                
-
                 <div class="table-responsive dt-responsive">
                     <table id="multi-table" class="table table-striped table-bordered nowrap">
                         <thead>
                             <tr>
-                                <th>Id buku</th>
-                                <th>Judul</th>
-                                <th>Penulis</th>
-                                <th>Penerbit</th>
-                                <th>Tahun Terbit</th>
-                                <th>Jumlah</th>
-                                <th>Kategori</th>
+                                <th>ID Peminjaman</th>
+                                <th>Nama Peminjam</th>
+                                <th>Judul Buku</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php $nomor = 1; @endphp
-                            @foreach ($buku as $buku)
+                            @foreach ($peminjaman as $peminjaman_item)
                             <tr>
-                                <td>{{ $buku->id }}</td>
-                                <td>{{ $buku->judul_buku }}</td>
-                                <td>{{ $buku->nama_penulis }}</td>
-                                <td>{{ $buku->nama_penerbit }}</td>
-                                <td>{{ $buku->tahun_terbit }}</td>
-                                <td>{{ $buku->jumlah }}</td>
-                                <td>{{ $buku->kategori }}</td>
-                               
+                                <td>{{ $peminjaman_item->id }}</td>
+                                <td></td>
+                                <td>
+                                    @if ($peminjaman_item->buku)
+                                        {{ $peminjaman_item->buku->judul_buku }}
+                                    @else
+                                        Buku tidak ditemukan
+                                    @endif
+                                </td>
+                                <td>{{ $peminjaman_item->status }}</td>
+                                <td>
+                                    @if ($peminjaman_item->status == 'Menunggu Validasi')
+                                    <a href="{{ url('validasi_pinjam', $peminjaman_item->id) }}" class="btn btn-primary">Validasi</a>
+                                    <a href="{{ url('tolak_pinjam', $peminjaman_item->id) }}" class="btn btn-danger">Tolak</a>
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -70,7 +68,7 @@
 
 @section('scripts')
 <!-- [Page Specific JS] start -->
- <!-- datatable Js -->
+<!-- datatable Js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="{{ URL::asset('build/js/plugins/dataTables.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/plugins/dataTables.bootstrap5.min.js') }}"></script>
@@ -82,31 +80,13 @@
 <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
 <!-- datatable Js -->
 <script>
-    function confirmation(ev) {
-        ev.preventDefault();
-        var urlToRedirect = ev.currentTarget.getAttribute('href');
-        swal({
-            title:"Apakah Kamu Yakin Menghapus Data Ini?",
-            text: "Kamu tidak bisa mengembalikan data ini",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                window.location.href = urlToRedirect;
-            }
-        });
-    }
-</script>
-
-<script>
     $(document).ready(function() {
         // Inisialisasi DataTables
         var table = $('#multi-table').DataTable({
             "dom": '<"top"f>rt<"bottom"><"clear">',
             "language": {
                 "search": "_INPUT_",
-                "searchPlaceholder": "Cari Buku"
+                "searchPlaceholder": "Cari Peminjaman"
             },
             "paging": false, // Disable pagination
         });
@@ -115,7 +95,5 @@
         $('#multi-table_filter').addClass('full-width');
     });
 </script>
-
-@include('sweetalert::alert')
 <!-- [Page Specific JS] end -->
 @endsection

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_penulis')->nullable();
             $table->string('nama_penerbit')->nullable();
             $table->string('tahun_terbit')->nullable();
+            $table->string('jumlah')->nullable();
             $table->string('kategori')->nullable();
             $table->timestamps();
         });
