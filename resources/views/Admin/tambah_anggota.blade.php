@@ -4,10 +4,8 @@
 
 @section('css')
 <!-- [Page specific CSS] start -->
-<!-- data tables css -->
 <link rel="stylesheet" href="{{ URL::asset('build/css/plugins/dataTables.bootstrap5.min.css') }}">
 <!-- [Page specific CSS] end -->
-<!-- Stylesheet -->
 @endsection
 
 @section('content')
@@ -64,6 +62,17 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label class="form-label" for="usertype">User Type</label>
+                                <select class="form-control @error('usertype') is-invalid @enderror" name="usertype" id="usertype">
+                                    <option value="anggota" {{ old('usertype') == 'anggota' ? 'selected' : '' }}>Anggota</option>
+                                    <option value="kepala_perpustakaan" {{ old('usertype') == 'kepala_perpustakaan' ? 'selected' : '' }}>Kepala Perpustakaan</option>
+                                </select>
+                                @error('usertype')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="form-group text-right">
                                 <button type="submit" class="btn btn-primary">Tambahkan</button>
                             </div>
@@ -79,11 +88,9 @@
 
 @section('scripts')
 <!-- [Page Specific JS] start -->
-<!-- datatable Js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="{{ URL::asset('build/js/plugins/dataTables.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/plugins/dataTables.bootstrap5.min.js') }}"></script>
-<!-- DataTables Buttons JS -->
 <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.bootstrap5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>

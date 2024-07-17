@@ -31,7 +31,7 @@
             </a>
         </li>
         <li class="pc-item">
-            <a href="{{ url('laporan') }}" class="pc-link">
+            <a href="{{ url('lihat_laporan') }}" class="pc-link">
                 <span class="pc-micon">
                     <i class="ph-duotone ph-file-text"></i>
                 </span>
@@ -44,21 +44,5 @@
                     <i class="ph-duotone ph-handshake"></i>
                 </span>
                 <span class="pc-mtext">Daftar Peminjaman Buku</span>
-            </a>
-        </li>
-        <li class="pc-item">
-            <a href="{{ url('data_pengembalian') }}" class="pc-link">
-                <span class="pc-micon">
-                    <i class="ph-duotone ph-arrow-arc-left"></i>
-                </span>
-                <span class="pc-mtext">Data Pengembalian Buku</span>
-            </a>
-        </li>
-        <li class="pc-item">
-            <a href="{{ url('kartu_anggota') }}" class="pc-link">
-                <span class="pc-micon">
-                    <i class="ph-duotone ph-users-four"></i>
-                </span>
-                <span class="pc-mtext">Kartu Anggota</span>
             </a>
         </li>

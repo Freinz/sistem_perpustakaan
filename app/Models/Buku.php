@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,4 +29,20 @@ class Buku extends Model
     {
         return $this->hasMany(Peminjaman::class, 'id_buku', 'id');
     }
+
+    /**
+     * Get the laporans for the Buku.
+     */
+    public function laporan()
+    {
+        return $this->hasManyThrough(
+            Laporan::class,
+            Peminjaman::class,
+            'id_buku', // Foreign key on Peminjaman table
+            'peminjaman_id', // Foreign key on Laporan table
+            'id', // Local key on Buku table
+            'id' // Local key on Peminjaman table
+        );
+    }
 }
+

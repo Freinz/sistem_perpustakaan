@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use App\Models\Buku;
+use App\Models\Laporan;
 use App\Models\Peminjaman;
+use App\Models\Pengembalian;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +34,8 @@ class AdminController extends Controller
             return view('admin.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
         } else if ($usertype == 'anggota') {
             return view('anggota.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
+        } else if ($usertype == 'kepala_perpustakaan') {
+            return view('kepala_perpustakaan.index', compact('anggota', 'totalAnggota', 'buku', 'totalBuku'));
         } else {
             return redirect()->back();
         }
@@ -61,6 +65,7 @@ class AdminController extends Controller
             'alamat' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|date',
             'no_hp' => 'nullable|string|max:20', // Sesuaikan dengan tipe data yang dipilih di migration
+            'usertype' => 'required|in:anggota,kepala_perpustakaan',
         ]);
 
         // Menambah anggota baru
@@ -72,10 +77,11 @@ class AdminController extends Controller
             'no_hp' => $request->no_hp,
         ]);
 
+        // Membuat user baru dengan usertype yang dipilih
         $user = User::create([
             'email' => $anggota->email,
             'password' => bcrypt('12345678'),
-            'usertype' => 'anggota', // Menetapkan usertype secara otomatis
+            'usertype' => $request->usertype, // Menggunakan nilai usertype dari input
         ]);
 
         // Menghubungkan user dengan anggota yang baru dibuat
@@ -86,6 +92,7 @@ class AdminController extends Controller
         Alert::success('Sukses', 'Anggota berhasil ditambahkan');
         return redirect()->back();
     }
+
 
     public function anggota_read($id)
     {
@@ -135,7 +142,7 @@ class AdminController extends Controller
     {
         // Ambil semua data peminjaman beserta relasi buku dan user
         $peminjaman = Peminjaman::with('buku', 'user')->get();
-        
+
         return view('admin.daftar_peminjaman', compact('peminjaman'));
     }
 
@@ -143,11 +150,11 @@ class AdminController extends Controller
     {
         // Temukan data peminjaman berdasarkan ID
         $peminjaman = Peminjaman::findOrFail($id);
-    
+
         // Ubah status peminjaman menjadi 'Dipinjam'
         $peminjaman->status = 'Dipinjam';
         $peminjaman->save();
-    
+
         // Ganti dari redirect()->route() ke redirect()->to() dengan URL langsung
         return redirect()->to('/daftar_peminjaman')->with('success', 'Peminjaman buku berhasil divalidasi.');
     }
@@ -171,6 +178,21 @@ class AdminController extends Controller
         // Redirect kembali ke halaman daftar peminjaman dengan pesan sukses
         return redirect()->to('/daftar_peminjaman')->with('success', 'Peminjaman buku berhasil ditolak.');
     }
+    // AdminController.php
+
+    // AdminController.php
+
+    public function lihat_laporan()
+    {
+        // Assuming $laporan is a collection of reports you want to display
+        $laporan = Laporan::all(); // Adjust this query based on your actual report model
+    
+        return view('admin.lihat_laporan', compact('laporan'));
+    }
+    
+
+
+
 
     // Metode lainnya tidak perlu diubah karena tidak digunakan dalam konteks ini
 }

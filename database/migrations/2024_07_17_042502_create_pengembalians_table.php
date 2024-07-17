@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('tanggal_pengembalian');
             $table->timestamps();
             
-            $table->foreign('id_peminjaman')->references('id')->on('peminjaman')->onDelete('cascade');
+            $table->foreign('id_peminjaman')->references('id')->on('peminjamans')->onDelete('cascade');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengembalian');
+        Schema::dropIfExists('pengembalians');
     }
 };

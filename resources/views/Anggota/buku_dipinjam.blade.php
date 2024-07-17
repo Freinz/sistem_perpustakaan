@@ -12,21 +12,21 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>Nama Anggota</th>
                                     <th>Judul Buku</th>
                                     <th>Tanggal Pinjam</th>
                                     <th>Tanggal Jatuh Tempo</th>
                                     <th>Status</th>
-                                    <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($peminjaman as $pinjam)
                                     <tr>
+                                        <td>{{ $pinjam->user->anggota->nama_lengkap }}</td>
                                         <td>{{ $pinjam->buku->judul_buku }}</td>
                                         <td>{{ $pinjam->created_at->format('d M Y') }}</td>
-                                        <td></td>
+                                        <td>{{ $pinjam->jatuh_tempo }}</td>
                                         <td>{{ $pinjam->status }}</td>
-                                        <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
                                     </tr>
                                 @endforeach
                             </tbody>

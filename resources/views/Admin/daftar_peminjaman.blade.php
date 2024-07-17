@@ -39,7 +39,7 @@
                             @foreach ($peminjaman as $peminjaman_item)
                             <tr>
                                 <td>{{ $peminjaman_item->id }}</td>
-                                <td></td>
+                                <td>{{ $peminjaman_item->user->anggota->nama_lengkap }}</td>
                                 <td>
                                     @if ($peminjaman_item->buku)
                                         {{ $peminjaman_item->buku->judul_buku }}

@@ -7,11 +7,11 @@
             </a>
         </li>
         <li class="pc-item">
-            <a href="{{ url('data_diri') }}" class="pc-link">
+            <a href="{{ url('lihat_anggota') }}" class="pc-link">
                 <span class="pc-micon">
                     <i class="ph-duotone ph-users"></i>
                 </span>
-                <span class="pc-mtext">Data Pribadi</span>
+                <span class="pc-mtext">Data Anggota</span>
             </a>
         </li>
         <li class="pc-item">
@@ -23,6 +23,14 @@
             </a>
         </li>
         <li class="pc-item">
+            <a href="{{ url('laporan') }}" class="pc-link">
+                <span class="pc-micon">
+                    <i class="ph-duotone ph-file-text"></i>
+                </span>
+                <span class="pc-mtext">Laporan</span>
+            </a>
+        </li>
+        <li class="pc-item">
             <a href="{{ url('data_peminjaman') }}" class="pc-link">
                 <span class="pc-micon">
                     <i class="ph-duotone ph-handshake"></i>
@@ -30,7 +38,14 @@
                 <span class="pc-mtext">Peminjaman Buku</span>
             </a>
         </li>
-     
+        <li class="pc-item">
+        <a href="{{ url('bukuDipinjam') }}" class="pc-link">
+                <span class="pc-micon">
+                    <i class="ph-duotone ph-handshake"></i>
+                </span>
+                <span class="pc-mtext">List Peminjaman Buku</span>
+            </a>
+        </li>
         <li class="pc-item">
             <a href="{{ url('daftar_pengembalian') }}" class="pc-link">
                 <span class="pc-micon">
@@ -40,10 +55,10 @@
             </a>
         </li>
         <li class="pc-item">
-        <a href="{{ url('bukuDipinjam') }}" class="pc-link">
+            <a href="{{ url('kartu_anggota') }}" class="pc-link">
                 <span class="pc-micon">
-                    <i class="ph-duotone ph-handshake"></i>
+                    <i class="ph-duotone ph-users-four"></i>
                 </span>
-                <span class="pc-mtext">Riwayat Peminjaman Buku</span>
+                <span class="pc-mtext">Kartu Anggota</span>
             </a>
         </li>

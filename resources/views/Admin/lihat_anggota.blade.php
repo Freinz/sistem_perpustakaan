@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends(auth()->user()->usertype == 'admin' ? 'layouts.main' : 'anggota.main')
 
 @section('title', 'Data Anggota')
 
@@ -11,6 +11,7 @@
     }
 </style>
 @endsection
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 @section('content')
@@ -28,7 +29,9 @@
                                 <th>Tanggal Lahir</th>
                                 <th>Nomor HP</th>
                                 <th>Email</th>
-                                <th>Aksi</th>
+                                @if (auth()->user()->usertype == 'admin')
+                                    <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -40,19 +43,20 @@
                                 <td>{{ $anggota->tanggal_lahir }}</td>
                                 <td>{{ $anggota->no_hp }}</td>
                                 <td>{{ $anggota->email }}</td>
-                                <td>
-                                    <ul class="list-inline mb-0">
-                                        <li class="list-inline-item m-0">
-                                            <a href="{{ url('anggota_read', $anggota->id) }}" class="avtar avtar-s btn btn-primary">
-                                                <i class="ti ti-pencil f-18"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item m-0">
-                                           
-                                        <a href="{{ url('anggota_hapus', $anggota->id) }}" class="btn btn-danger" onclick="confirmation(event)">Hapus</a>
-                                        </li>
-                                    </ul>
-                                </td>
+                                @if (auth()->user()->usertype == 'admin')
+                                    <td>
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item m-0">
+                                                <a href="{{ url('anggota_read', $anggota->id) }}" class="avtar avtar-s btn btn-primary">
+                                                    <i class="ti ti-pencil f-18"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item m-0">
+                                                <a href="{{ url('anggota_hapus', $anggota->id) }}" class="btn btn-danger" onclick="confirmation(event)">Hapus</a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

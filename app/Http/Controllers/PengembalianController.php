@@ -9,18 +9,12 @@ use Illuminate\Http\Request;
 
 class PengembalianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     public function daftar_pengembalian()
     {
-        // Ambil semua data pengembalian beserta relasi buku dan user
-        $pengembalian = Peminjaman::with('buku', 'user')->where('status', 'Dipinjam')->get();
+        // Ambil semua data pengembalian beserta relasi buku dan user yang masih dipinjam
+        $pengembalian = Peminjaman::with('buku', 'user')
+            ->where('status', 'Dipinjam')
+            ->get();
         
         return view('admin.daftar_pengembalian', compact('pengembalian'));
     }
@@ -40,7 +34,7 @@ class PengembalianController extends Controller
         $buku->save();
     
         // Redirect kembali ke halaman daftar pengembalian dengan pesan sukses
-        return redirect()->to('/daftar_pengembalian')->with('success', 'Pengembalian buku berhasil diselesaikan.');
+        return redirect()->route('daftar_pengembalian')->with('success', 'Pengembalian buku berhasil diselesaikan.');
     }
 
     public function tambah_jatuh_tempo($id)
@@ -53,55 +47,7 @@ class PengembalianController extends Controller
         $peminjaman->save();
     
         // Redirect kembali ke halaman daftar pengembalian dengan pesan sukses
-        return redirect()->to('/daftar_pengembalian')->with('success', 'Jatuh tempo berhasil diperpanjang 1 minggu.');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('daftar_pengembalian')->with('success', 'Jatuh tempo berhasil diperpanjang 1 minggu.');
     }
 }
 

@@ -5,7 +5,7 @@
             <a href="/dashboard" class="b-brand text-primary">
                 <!-- ========   Change your logo from here   ============ -->
                 <img src="{{ URL::asset('image/poliban.png') }}" class="img-fluid w-25" alt="logo image">
-                <span class="badge bg-brand-color-2 rounded-pill ms-2 theme-version">KEMENKUMHAM</span>
+                <span class="badge bg-brand-color-2 rounded-pill ms-2 theme-version"></span>
             </a>
         </div>
         <div class="navbar-content">

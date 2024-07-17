@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\Peminjaman;
+use App\Models\Pengembalian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,8 +29,13 @@ class PeminjamanController extends Controller
         // Ambil data buku berdasarkan ID
         $buku = Buku::find($id);
 
+        // Cek apakah user memiliki pinjaman yang jatuh tempo
+        if (Peminjaman::isUserBanned(Auth::id())) {
+            return redirect()->back()->with('error', 'Anda tidak bisa meminjam buku baru karena memiliki peminjaman yang melewati jatuh tempo.');
+        }
+
         // Pastikan ada cukup buku yang tersedia untuk dipinjam
-        if ($buku->jumlah > 0) {
+        if ($buku && $buku->jumlah > 0) {
 
             // Buat data peminjaman baru
             $peminjaman = new Peminjaman();
@@ -56,11 +62,45 @@ class PeminjamanController extends Controller
     public function bukuDipinjam()
     {
         // Ambil peminjaman yang sudah divalidasi dan dimiliki oleh anggota yang sedang login
-        $peminjaman = Peminjaman::where('status', 'Dipinjam')
-                                ->where('user_id', auth()->user()->id)
-                                ->with('buku')
-                                ->get();
+        $peminjaman = Peminjaman::where('status', 'Selesai Dipinjam')
+            ->where('user_id', auth()->user()->id)
+            ->with(['buku', 'user.anggota']) // Load relasi buku dan user.anggota
+            ->get();
 
         return view('anggota.buku_dipinjam', compact('peminjaman'));
+    }
+
+
+    public function selesaiPeminjaman($id)
+{
+    $peminjaman = Peminjaman::findOrFail($id);
+
+    // Update status peminjaman menjadi 'Selesai Dipinjam'
+    $peminjaman->status = 'Selesai Dipinjam';
+    $peminjaman->save();
+
+    // Simpan informasi pengembalian ke dalam tabel pengembalian
+    $pengembalian = new Pengembalian();
+    $pengembalian->id_peminjaman = $peminjaman->id;
+    $pengembalian->tanggal_pengembalian = now(); // Misalnya menggunakan waktu sekarang
+    $pengembalian->save();
+
+    Alert::success('Sukses', 'Peminjaman telah ditandai sebagai selesai.');
+
+    return redirect()->back();
+}
+
+
+
+    public function tambahJatuhTempo($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+
+        // Tambah 7 hari ke tanggal jatuh tempo yang ada
+        $peminjaman->jatuh_tempo = Carbon::parse($peminjaman->jatuh_tempo)->addDays(7);
+        $peminjaman->save();
+
+        Alert::success('Sukses', 'Tanggal jatuh tempo berhasil diperpanjang.');
+        return redirect()->back();
     }
 }
